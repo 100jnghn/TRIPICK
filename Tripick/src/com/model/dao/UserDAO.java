@@ -90,6 +90,8 @@ public class UserDAO {
         } finally {
             DBConnectionMgr dbcp = getInstance();
             dbcp.freeConnection(pstmt, rs);
+
+
         }
 
         return user;
@@ -99,7 +101,7 @@ public class UserDAO {
         int result = 0;
         PreparedStatement pstmt = null;
 
-        String sql = "update users set id = ? where user_no = ?";
+        String sql = "update users set id = ?, updated_at = now() where user_no = ?";
 
         try {
             pstmt = conn.prepareStatement(sql);
@@ -122,7 +124,7 @@ public class UserDAO {
         int result = 0;
         PreparedStatement pstmt = null;
 
-        String sql = "update users set pw = ? where user_no = ?";
+        String sql = "update users set pw = ?, updated_at = now() where user_no = ?";
 
         try {
             pstmt = conn.prepareStatement(sql);
@@ -136,6 +138,27 @@ public class UserDAO {
         } finally {
             DBConnectionMgr dbcp = getInstance();
             dbcp.freeConnection(pstmt);
+        }
+
+        return result;
+    }
+
+    public int updateUserInfo(Connection conn, String nickname, int age) {
+        int result = 0;
+        PreparedStatement pstmt = null;
+
+        String sql = "update users set nickname = ?, age = ?, updated_at = now() where user_no = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, nickname);
+            pstmt.setInt(2, age);
+            pstmt.setInt(3, UserController.myUserNo);
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
 
         return result;
