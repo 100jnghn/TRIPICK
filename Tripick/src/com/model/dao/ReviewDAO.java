@@ -115,10 +115,8 @@ public class ReviewDAO {
 
             if(result > 0) {
                 conn.commit();
-                System.out.println("리뷰 삽입 성공");
             }else  {
                 conn.rollback();
-                System.out.println("리뷰 삽입 실패");
             }
 
             return result;
@@ -144,10 +142,8 @@ public class ReviewDAO {
             result = pstmt.executeUpdate();
             if(result > 0) {
                 conn.commit();
-                System.out.println("리뷰 내용 수정 완료");
             }else   {
                 conn.rollback();
-                System.out.println("리뷰 내용 수정 실패");
             }
 
             return result;
@@ -170,10 +166,8 @@ public class ReviewDAO {
             result = pstmt.executeUpdate();
             if(result > 0) {
                 conn.commit();
-                System.out.println("리뷰 삭제 성공");
             }else   {
                 conn.rollback();
-                System.out.println("리뷰 삭제 실패");
             }
 
             return result;
@@ -184,5 +178,16 @@ public class ReviewDAO {
         }
     }
 
+    public void updateRate(Connection conn) {
+        PreparedStatement pstmt = null;
+        String sql = "UPDATE travel AS t LEFT JOIN (SELECT r.travel_no, SUM(r.rate) AS sum_rate, COUNT( *)AS cnt FROM review AS r GROUP BY r.travel_no)AS j ON j.travel_no = t.travel_no SET t.sum = COALESCE(j.sum_rate, 0), t.count = COALESCE(j.cnt, 0)";
+        try {
+            pstmt = conn.prepareStatement(sql);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }finally {
+            DBConnectionMgr.getInstance().freeConnection(pstmt);
+        }
+    }
 
 }

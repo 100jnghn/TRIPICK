@@ -79,6 +79,7 @@ public class ReviewService {
         try {
             conn = dbcp.getConnection();
             rs = reviewDAO.insertReview(conn, dto);
+            reviewDAO.updateRate(conn);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
@@ -95,6 +96,7 @@ public class ReviewService {
         try {
             conn = dbcp.getConnection();
             rs = reviewDAO.modifyReview(conn, dto);
+            reviewDAO.updateRate(conn);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
@@ -111,6 +113,7 @@ public class ReviewService {
         try {
             conn = dbcp.getConnection();
             rs = reviewDAO.deleteReview(conn, reviewNo);
+            reviewDAO.updateRate(conn);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
