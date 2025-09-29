@@ -92,7 +92,6 @@ public class UserDAO {
             dbcp.freeConnection(pstmt, rs);
         }
 
-
         return user;
     }
 
@@ -100,12 +99,35 @@ public class UserDAO {
         int result = 0;
         PreparedStatement pstmt = null;
 
-        String sql = "update users set id = ? where id = ?";
+        String sql = "update users set id = ? where user_no = ?";
 
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
-            pstmt.setString(2, UserController.myUserNo);
+            pstmt.setInt(2, UserController.myUserNo);
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            DBConnectionMgr dbcp = getInstance();
+            dbcp.freeConnection(pstmt);
+        }
+
+        return result;
+    }
+
+    public int updatePw(Connection conn, String pw) {
+        int result = 0;
+        PreparedStatement pstmt = null;
+
+        String sql = "update users set pw = ? where user_no = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, pw);
+            pstmt.setInt(2, UserController.myUserNo);
 
             pstmt.executeUpdate();
 

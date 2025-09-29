@@ -9,7 +9,7 @@ public class UserController {
     * myUserNo : 로그인 성공하면 입력한 유저의 user_no 저장
     * */
     public static boolean isLogin;
-    public static String myUserNo;
+    public static int myUserNo;
 
     // endregion
 }
