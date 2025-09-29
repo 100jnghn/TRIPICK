@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class ReviewDAO {
 
-    public ArrayList<ReviewDTO> searchFromLoc(Connection conn, String travelNo) {
+    public ArrayList<ReviewDTO> searchFromLoc(Connection conn, int travelNo) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<ReviewDTO> dtoList = new ArrayList<ReviewDTO>();
@@ -19,7 +19,7 @@ public class ReviewDAO {
         try {
             String sql = "select r.review_no, u.nickname, r.rate from review r join users u ON r.user_no = u.user_no where travel_no=?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, travelNo);
+            pstmt.setInt(1, travelNo);
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -70,7 +70,7 @@ public class ReviewDAO {
         return dtoList;
     }
 
-    public ReviewDTO readDetailReview(Connection conn, String reviewNo) {
+    public ReviewDTO readDetailReview(Connection conn, int reviewNo) {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ReviewDTO dto = new ReviewDTO();
@@ -78,7 +78,7 @@ public class ReviewDAO {
 
         try {
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, reviewNo);
+            pstmt.setInt(1, reviewNo);
             rs = pstmt.executeQuery();
             if (rs.next()) {
                 dto.setReviewNo(rs.getString("review_no"));
@@ -158,7 +158,7 @@ public class ReviewDAO {
         }
 
     }
-    public void deleteReview(Connection conn, int reviewNo) {
+    public int deleteReview(Connection conn, int reviewNo) {
         PreparedStatement pstmt = null;
         int result = 0;
 
@@ -175,6 +175,8 @@ public class ReviewDAO {
                 conn.rollback();
                 System.out.println("리뷰 삭제 실패");
             }
+
+            return result;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
