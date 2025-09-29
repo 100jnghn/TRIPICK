@@ -90,8 +90,6 @@ public class UserDAO {
         } finally {
             DBConnectionMgr dbcp = getInstance();
             dbcp.freeConnection(pstmt, rs);
-
-
         }
 
         return user;
@@ -143,7 +141,7 @@ public class UserDAO {
         return result;
     }
 
-    public int updateUserInfo(Connection conn, String nickname, int age) {
+    public int updateInfo(Connection conn, String nickname, int age) {
         int result = 0;
         PreparedStatement pstmt = null;
 
