@@ -3,6 +3,7 @@ package com.model.dao;
 import com.common.DBConnectionMgr;
 import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
+import com.model.dto.UserDTO;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -62,12 +63,11 @@ public class TravelDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
         }
         return list;
     }
-
 
 
     //2. 권역별 검색 결과
@@ -110,7 +110,7 @@ public class TravelDAO {
         try {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, title+"%");
+            pstmt.setString(1, title + "%");
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -148,7 +148,7 @@ public class TravelDAO {
 
             rs = pstmt.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 traveldto = new TravelDTO();
 
                 traveldto.setDistrict(rs.getString("District"));
@@ -164,6 +164,37 @@ public class TravelDAO {
             e.printStackTrace();
         }
         return traveldto;
+    }
+
+
+    //5. 사용자의 나이를 기준으로 가장 선호하는 여행지 검색
+    public ArrayList<TravelDTO> listByUserAge(Connection conn, UserDTO user) {
+        ArrayList<TravelDTO> list = new ArrayList<>();
+        String sql = "select * from Travel where age between ? and ? order by (sum / count) desc)";
+
+        try {
+
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, user.getAge() / 10);
+            pstmt.setInt(2, user.getAge() / 10 + 9);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                TravelDTO traveldto = new TravelDTO();
+
+                traveldto.setTravelNo(rs.getInt("TravelNo"));
+                traveldto.setDistrict(rs.getString("District"));
+                traveldto.setTitle(rs.getString("Title"));
+                traveldto.setSum(rs.getFloat("Sum"));
+                traveldto.setCount(rs.getInt("Count"));
+
+                list.add(traveldto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
 }
