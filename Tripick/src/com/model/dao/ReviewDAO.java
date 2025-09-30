@@ -17,7 +17,7 @@ public class ReviewDAO {
         ArrayList<ReviewDTO> dtoList = new ArrayList<ReviewDTO>();
 
         try {
-            String sql = "select r.review_no, u.nickname, r.rate, r.created_at from review r join users u ON r.user_no = u.user_no where travel_no=?";
+            String sql = "select r.review_no, u.nickname, r.rate, r.created_at, r.updated_at from review r join users u ON r.user_no = u.user_no where travel_no=?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, travelNo);
             rs = pstmt.executeQuery();
@@ -28,6 +28,7 @@ public class ReviewDAO {
                 dto.setUserNickName(rs.getString("nickname"));
                 dto.setRate(rs.getInt("rate"));
                 dto.setCreatedAt(rs.getString("created_at"));
+                dto.setUpdatedAt(rs.getString("updated_at"));
                 dtoList.add(dto);
             }
 
@@ -45,7 +46,7 @@ public class ReviewDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ArrayList<ReviewDTO> dtoList = new ArrayList<ReviewDTO>();
-            String sql = "select r.review_no, t.title as travel_title, r.title as review_title, r.rate, r.created_at\n" +
+            String sql = "select r.review_no, t.title as travel_title, r.title as review_title, r.rate, r.created_at, r.updated_at\n" +
                     "from review r\n" +
                     "    join travel t on r.travel_no = t.travel_no\n" +
                     "    JOIN users u on r.user_no = u.user_no\n" +
@@ -62,6 +63,7 @@ public class ReviewDAO {
                 dto.setTravelTitle(rs.getString("travel_title"));
                 dto.setRate(rs.getInt("rate"));
                 dto.setCreatedAt(rs.getString("created_at"));
+                dto.setUpdatedAt(rs.getString("updated_at"));
                 dtoList.add(dto);
             }
         } catch (SQLException e) {

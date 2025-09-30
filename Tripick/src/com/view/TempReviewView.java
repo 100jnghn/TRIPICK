@@ -17,6 +17,7 @@ public class TempReviewView {
             displayMiddleMenu();
 
             int choice = sc.nextInt();
+            sc.nextLine();
 
             switch (choice) {
                 case 1:
@@ -38,6 +39,7 @@ public class TempReviewView {
             ReviewController con = new ReviewController();
 
             int choice = sc.nextInt();
+            sc.nextLine();
             switch (choice) {
                 case 1://검색
                     searchReview();
@@ -69,6 +71,7 @@ public class TempReviewView {
             displayReviewSearchMenu();
             ReviewController con = new ReviewController();
             int choice = sc.nextInt();
+            sc.nextLine();
             switch (choice) {
                 case 1:
                     int travelNo = searchFromLocMenu();
@@ -78,6 +81,9 @@ public class TempReviewView {
                     String writer = searchFromWriter();
                     con.searchFromWriter(writer);
                     break;
+                case 3:
+                    int reviewNo = printDetailReview();
+                    con.readDetailReview(reviewNo);
                 case -1:
                     System.out.println("종료");
                     return;
@@ -87,6 +93,15 @@ public class TempReviewView {
             }
         }
 
+    }
+
+    private int printDetailReview() {
+        System.out.println("=================================");
+        System.out.println("===========리뷰 상세 출력===========");
+        System.out.print("출력할 리뷰 번호 입력 >> ");
+        int reviewNo = sc.nextInt();
+        sc.nextLine();
+        return reviewNo;
     }
 
     private String searchFromWriter() {
@@ -100,7 +115,9 @@ public class TempReviewView {
         System.out.println("=================================");
         System.out.println("=============리뷰 검색=============");
         System.out.print("관광지 번호 입력 >> ");
-        return sc.nextInt();
+        int travelNo = sc.nextInt();
+        sc.nextLine();
+        return travelNo;
     }
 
     private void displayReviewSearchMenu() {
@@ -109,6 +126,7 @@ public class TempReviewView {
         System.out.println("-1. 종료");
         System.out.println("1. 관광지로 리뷰 검색");
         System.out.println("2. 작성자로 리뷰 검색");
+        System.out.println("3. 리뷰 번호로 상세 출력");
         System.out.print("입력 >> ");
     }
 
@@ -116,7 +134,9 @@ public class TempReviewView {
         System.out.println("=================================");
         System.out.println("===========리뷰 삭제 화면===========");
         System.out.print("삭제할 리뷰 번호 입력 >> ");
-        return sc.nextInt();
+        int reviewNo = sc.nextInt();
+        sc.nextLine();
+        return reviewNo;
     }
 
     private ReviewDTO modifyMenu() {
@@ -133,12 +153,15 @@ public class TempReviewView {
         dto.setReviewTitle(sc.nextLine());
         System.out.print("새로운 내용 >> ");
         dto.setContent(sc.nextLine());
+        System.out.print("새 평점 >> ");
+        dto.setRate(sc.nextInt());
+        sc.nextLine();
         return dto;
     }
 
     private ReviewDTO insertMenu() {
         ReviewDTO dto = new ReviewDTO();
-        dto.setReviewNo(UserController.myUserNo);
+        dto.setUserNo(UserController.myUserNo);
         System.out.println("=================================");
         System.out.println("===========리뷰 등록 화면===========");
         System.out.print("관광지 번호 입력 >> ");
@@ -146,9 +169,11 @@ public class TempReviewView {
         sc.nextLine();
         System.out.print("리뷰 제목 입력 >> ");
         dto.setReviewTitle(sc.nextLine());
-        System.out.println("리뷰 내용 입력 >> ");
+        System.out.print("리뷰 내용 입력 >> ");
         dto.setContent(sc.nextLine());
-
+        System.out.print("평점 입력 >> ");
+        dto.setRate(sc.nextInt());
+        sc.nextLine();
         return dto;
     }
 

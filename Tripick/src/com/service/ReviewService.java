@@ -83,6 +83,7 @@ public class ReviewService {
             conn = dbcp.getConnection();
             conn.setAutoCommit(false);
             rs = reviewDAO.insertReview(conn, dto);
+            reviewDAO.updateRate(conn);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }finally {
