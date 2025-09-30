@@ -61,7 +61,7 @@ public class ReviewController {
 
     public void deleteReview(int reviewNo) {
         int rs = reviewService.deleteReview(reviewNo);
-        if (rs > 0) {
+        if (rs >= 1) {
             new TempReviewView().displaySuccess("리뷰 삭제 성공");
         } else {
             new TempReviewView().displayError("리뷰 삭제 실패");

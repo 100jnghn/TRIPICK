@@ -10,12 +10,12 @@ public class TempReviewView {
     public void test() {
         ReviewController con = new ReviewController();
         ReviewDTO reviewDTO = new ReviewDTO();
-        reviewDTO.setReviewNo(902);
+        reviewDTO.setReviewNo(891);
         reviewDTO.setReviewTitle("리뷰 수정 테스트");
         reviewDTO.setContent("리뷰 수정 테스트, 내용");
         reviewDTO.setRate(3);
 
-        con.deleteReview(902);
+        con.modifyReview(reviewDTO);
     }
 
     public void displayReviewList(ArrayList<ReviewDTO> dtoList) {
