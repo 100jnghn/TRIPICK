@@ -15,6 +15,7 @@ public class UserController {
      * */
     public static boolean isLogin;
     public static int myUserNo;
+    public static String myUserId;
 
     // endregion
     // region METHODS
@@ -30,18 +31,23 @@ public class UserController {
             // 일치하는 아이디 없음
             if (user == null) {
 
+                System.out.println("아이디 없음");
                 return;
             }
 
             // 비밀번호 다름
             if (!pw.equals(user.getPw())) {
 
+                System.out.println("비번 다름");
                 return;
             }
 
             // 로그인 성공
             isLogin = true;
             myUserNo = user.getUserNo();
+            myUserId = user.getId();
+            selectOneById(id);
+            System.out.println("로그인 성공");
 
         } catch (Exception e) {
 
@@ -59,14 +65,35 @@ public class UserController {
 
             if (result > 0) {
                 // 회원가입 성공
+                selectOneById(user.getId());
+                System.out.println("회원가입 성공");
 
             } else {
                 // 회원가입 실패
+                System.out.println("회원가입 실패");
             }
 
         } catch (Exception e) {
 
             // 오류 메시지
+            e.printStackTrace();
+        }
+    }
+
+    public void selectOneById(String id) {
+
+        try {
+            UserDTO user = userService.selectOneById(id);
+
+            if (user != null) {
+                // 유저 선택 성공
+                System.out.println(user);
+
+            } else {
+                // 유저 선택 실패
+
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -85,6 +112,9 @@ public class UserController {
 
             if (result > 0) {
                 // 아이디 변경 성공
+                this.myUserId = id;
+
+                selectOneById(id);
 
             } else {
                 // 아이디 변경 실패
@@ -111,6 +141,7 @@ public class UserController {
 
             if (result > 0) {
                 // 비번 변경 성공
+                selectOneById(this.myUserId);
 
             } else {
                 // 비번 변경 실패
@@ -137,6 +168,7 @@ public class UserController {
 
             if (result > 0) {
                 // 닉네임, 나이 변경 성공
+                selectOneById(this.myUserId);
 
             } else {
                 // 변경 실패
@@ -161,7 +193,10 @@ public class UserController {
             int result = userService.deleteUser(id);
 
             if (result > 0) {
+                // 회원 정보 삭제 완료
 
+            } else {
+                // 변경 실패
             }
 
         } catch (Exception e) {
