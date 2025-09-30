@@ -15,7 +15,7 @@ public class TempUserView {
 
         int choice = 0;
 
-        do {
+        while(true) {
             try {
 
                 // 시작 화면 출력
@@ -26,6 +26,11 @@ public class TempUserView {
 
                 switch (choice) {
 
+                    // 종료
+                    case -1:
+                        displayMessage("종료합니다~");
+                        return;
+
                     // 로그인
                     case 1:
                         if (UserController.isLogin) {
@@ -34,9 +39,12 @@ public class TempUserView {
                         } else {
                             String[] idpw = loginMenu();
                             userController.login(idpw[0], idpw[1]);
+
                             //관광지 검색, 리뷰 메뉴로 이동 메소드를 호출
-                            TempReviewView view = new TempReviewView();
-                            view.middleMenu();
+                            if (UserController.isLogin) {
+                                TempReviewView view = new TempReviewView();
+                                view.middleMenu();
+                            }
                         }
                         break;
 
@@ -55,16 +63,16 @@ public class TempUserView {
                     // 회원 정보 수정
                     case 3:
                         if (!UserController.isLogin) {
-                            System.out.println("로그인 상태가 아닙니다.");
+                            displayMessage("로그인 상태가 아닙니다.");
 
                         } else {
                             int updateChoice = updateUserMenu();
 
-                            if(updateChoice == 1) {
+                            if (updateChoice == 1) {
                                 System.out.print("변경할 아이디 >> ");
                                 userController.updateId(inputString());
 
-                            }else if (updateChoice == 2) {
+                            } else if (updateChoice == 2) {
                                 System.out.print("변경할 비밀번호 >> ");
                                 userController.updatePw(inputString());
 
@@ -80,24 +88,24 @@ public class TempUserView {
 
                         }
                         break;
-                        
+
+                    // 유저 삭제 기능
+                    // 요구사항엔 없는데 테스트를 위해 만들었음
                     case 4:
                         String id = deleteUserMenu();
                         userController.deleteUser(id);
 
                     default:
+                        displayMessage("잘못된 입력값입니다.");
                         break;
                 }
 
             } catch (Exception e) {
                 e.printStackTrace();
-                System.out.println("잘못된 입력값입니다.");
-
             }
 
-        } while (choice != -1);
+        }
     }
-
 
 
     private String[] loginMenu() {
@@ -173,6 +181,10 @@ public class TempUserView {
         userController.selectOneById(UserController.myUserId);
     }
 
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
     // endregion
     // region METHODS-INPUT
 
@@ -183,7 +195,6 @@ public class TempUserView {
     private int inputInt() {
         return sc.nextInt();
     }
-
 
     // endregion
 }
