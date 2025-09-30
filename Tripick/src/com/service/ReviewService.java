@@ -32,6 +32,7 @@ public class ReviewService {
         ArrayList<ReviewDTO> list = new ArrayList<>();
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             list = reviewDAO.searchFromLoc(conn, travelNo);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -47,6 +48,7 @@ public class ReviewService {
         ArrayList<ReviewDTO> list = new ArrayList<>();
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             list = reviewDAO.searchFromWriter(conn, nickName);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -63,6 +65,7 @@ public class ReviewService {
         ReviewDTO reviewDTO = null;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             reviewDTO = reviewDAO.readDetailReview(conn, reviewNo);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -78,6 +81,7 @@ public class ReviewService {
         int rs = 0;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             rs = reviewDAO.insertReview(conn, dto);
             reviewDAO.updateRate(conn);
         } catch (Exception e) {
@@ -95,6 +99,7 @@ public class ReviewService {
         int rs = 0;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             rs = reviewDAO.modifyReview(conn, dto);
             reviewDAO.updateRate(conn);
         } catch (Exception e) {
@@ -112,6 +117,7 @@ public class ReviewService {
         int rs = 0;
         try {
             conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
             rs = reviewDAO.deleteReview(conn, reviewNo);
             reviewDAO.updateRate(conn);
         } catch (Exception e) {

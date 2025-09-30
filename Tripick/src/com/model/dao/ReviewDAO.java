@@ -24,9 +24,9 @@ public class ReviewDAO {
 
             while (rs.next()) {
                 ReviewDTO dto = new ReviewDTO();
-                dto.setReviewNo(rs.getString("review_no"));
+                dto.setReviewNo(rs.getInt("review_no"));
                 dto.setUserNickName(rs.getString("nickname"));
-                dto.setRate(rs.getString("rate"));
+                dto.setRate(rs.getInt("rate"));
                 dtoList.add(dto);
             }
 
@@ -56,10 +56,10 @@ public class ReviewDAO {
 
             while (rs.next()) {
                 ReviewDTO dto = new ReviewDTO();
-                dto.setReviewNo(rs.getString("review_no"));
+                dto.setReviewNo(rs.getInt("review_no"));
                 dto.setReviewTitle(rs.getString("review_title"));
                 dto.setTravelTitle(rs.getString("travel_title"));
-                dto.setRate(rs.getString("rate"));
+                dto.setRate(rs.getInt("rate"));
                 dtoList.add(dto);
             }
         } catch (SQLException e) {
@@ -74,19 +74,19 @@ public class ReviewDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         ReviewDTO dto = new ReviewDTO();
-        String sql = "select * from review where review_no=?";
+        String sql = "select u.*, r.review_no, r.title as review_title, t.title as travel_title, r.content, r.rate, r.created_at, r.updated_at from review r join users u using(user_no) join travel t using (travel_no) where review_no=?";
 
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, reviewNo);
             rs = pstmt.executeQuery();
             if (rs.next()) {
-                dto.setReviewNo(rs.getString("review_no"));
+                dto.setReviewNo(rs.getInt("review_no"));
                 dto.setUserNickName(rs.getString("nickname"));
                 dto.setReviewTitle(rs.getString("review_title"));
                 dto.setTravelTitle(rs.getString("travel_title"));
                 dto.setContent(rs.getString("content"));
-                dto.setRate(rs.getString("rate"));
+                dto.setRate(rs.getInt("rate"));
                 dto.setCreatedAt(rs.getString("created_at"));
                 dto.setUpdatedAt(rs.getString("updated_at"));
             }
@@ -103,13 +103,14 @@ public class ReviewDAO {
         PreparedStatement pstmt = null;
         int result = 0;
         try {
-            String sql = "insert into Review values(null, ?, ?, ?, ?, now(), null)";
+            String sql = "insert into Review values(null, ?, ?, ?, ?, ?, now(), null)";
 
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, dto.getTravelNo());
-            pstmt.setString(2, dto.getReviewTitle());
-            pstmt.setString(3, dto.getContent());
-            pstmt.setString(4, dto.getRate());
+            pstmt.setInt(1, dto.getUserNo());
+            pstmt.setInt(2, dto.getTravelNo());
+            pstmt.setString(3, dto.getReviewTitle());
+            pstmt.setString(4, dto.getContent());
+            pstmt.setInt(5, dto.getRate());
 
             result = pstmt.executeUpdate();
 
@@ -137,8 +138,8 @@ public class ReviewDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, dto.getReviewTitle());
             pstmt.setString(2, dto.getContent());
-            pstmt.setString(3, dto.getRate());
-            pstmt.setString(4, dto.getReviewNo());
+            pstmt.setInt(3, dto.getRate());
+            pstmt.setInt(4, dto.getReviewNo());
             result = pstmt.executeUpdate();
             if(result > 0) {
                 conn.commit();
@@ -152,8 +153,8 @@ public class ReviewDAO {
         }finally {
             DBConnectionMgr.getInstance().freeConnection(pstmt);
         }
-
     }
+
     public int deleteReview(Connection conn, int reviewNo) {
         PreparedStatement pstmt = null;
         int result = 0;

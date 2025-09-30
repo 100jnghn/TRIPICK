@@ -1,32 +1,41 @@
 package com.model.dto;
 
+import java.util.StringJoiner;
+
 public class ReviewDTO {
-    private String reviewNo;
-    private String userNo;
-    private String travelNo;
+    private Integer reviewNo;
+    private Integer userNo;
+    private Integer travelNo;
     private String reviewTitle;
     private String content;
-    private String rate;
+    private Integer rate;
     private String createdAt;
     private String updatedAt;
     private String travelTitle;
     private String userNickName;
 
+
     @Override
     public String toString() {
-        return "ReviewDTO{" +
-                "reviewNo='" + reviewNo + '\'' +
-                ", userNo='" + userNo + '\'' +
-                ", travelNo='" + travelNo + '\'' +
-                ", reviewTitle='" + reviewTitle + '\'' +
-                ", content='" + content + '\'' +
-                ", rate='" + rate + '\'' +
-                ", createdAt='" + createdAt + '\'' +
-                ", updatedAt='" + updatedAt + '\'' +
-                ", travelTitle='" + travelTitle + '\'' +
-                ", userNickName='" + userNickName + '\'' +
-                '}';
+        StringJoiner j = new StringJoiner(", ", "{ ", " }");
+
+        if (reviewNo != null) j.add("reviewNo='" + reviewNo + "'");
+        if (userNo != null) j.add("userNo='" + userNo + "'");
+        if (travelNo != null) j.add("travelNo='" + travelNo + "'");
+        if (userNickName != null) j.add("작성자='" + userNickName + "'");
+        if (reviewTitle != null) j.add("Review 제목='" + reviewTitle + "'");
+        if (content != null) j.add("내용='" + content + "'");
+        if (rate != null) j.add("평점='" + rate + "'");
+        if (updatedAt != null) {
+            j.add("수정일='" + updatedAt + "'");
+        } else {
+            j.add("작성일='" + createdAt + "'");
+        }
+        if (travelTitle != null) j.add("여행지='" + travelTitle + "'");
+
+        return j.toString();
     }
+
 
     public String getTravelTitle() {
         return travelTitle;
@@ -44,27 +53,27 @@ public class ReviewDTO {
         this.userNickName = userNickName;
     }
 
-    public String getReviewNo() {
+    public int getReviewNo() {
         return reviewNo;
     }
 
-    public void setReviewNo(String reviewNo) {
+    public void setReviewNo(int reviewNo) {
         this.reviewNo = reviewNo;
     }
 
-    public String getUserNo() {
+    public int getUserNo() {
         return userNo;
     }
 
-    public void setUserNo(String userNo) {
+    public void setUserNo(int userNo) {
         this.userNo = userNo;
     }
 
-    public String getTravelNo() {
+    public int getTravelNo() {
         return travelNo;
     }
 
-    public void setTravelNo(String travelNo) {
+    public void setTravelNo(int travelNo) {
         this.travelNo = travelNo;
     }
 
@@ -84,11 +93,11 @@ public class ReviewDTO {
         this.content = content;
     }
 
-    public String getRate() {
+    public int getRate() {
         return rate;
     }
 
-    public void setRate(String rate) {
+    public void setRate(int rate) {
         this.rate = rate;
     }
 
