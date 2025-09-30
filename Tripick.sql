@@ -374,3 +374,14 @@ INSERT INTO review (user_no, travel_no, title, content, rate, created_at, update
 (30, 75, '음식이 맛있었던 여행', '숙소 서비스가 너무 좋아서 편하게 쉬다 왔습니다. 다음에도 꼭 이용하고 싶어요.', 1, '2021-11-28', NULL),
 (30, 76, '사진 찍기 좋은 명소', '근처 식당에서 먹은 지역 음식이 정말 인상 깊었습니다. 다시 먹고 싶어요.', 4, '2021-03-10', NULL),
 (30, 77, '재방문하고 싶은 여행지', '근처 식당에서 먹은 지역 음식이 정말 인상 깊었습니다. 다시 먹고 싶어요.', 2, '2022-03-29', NULL);
+
+
+UPDATE travel AS t
+    LEFT JOIN (SELECT r.travel_no,
+                      SUM(r.rate) AS sum_rate,
+                      COUNT(*)    AS cnt
+               FROM review AS r
+               GROUP BY r.travel_no) AS j
+    ON j.travel_no = t.travel_no
+SET t.sum   = COALESCE(j.sum_rate, 0),
+    t.count = COALESCE(j.cnt, 0);

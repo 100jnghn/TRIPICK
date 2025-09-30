@@ -1,21 +1,15 @@
 package com.model.dao;
 
 import com.common.DBConnectionMgr;
-import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
-import com.model.dto.UserDTO;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-
-import static com.common.DBConnectionMgr.getInstance;
 
 public class TravelDAO {
 
@@ -37,11 +31,11 @@ public class TravelDAO {
 
     public ArrayList<TravelDTO> TravelList(Connection conn) {
 
-        ArrayList<TravelDTO> list = new ArrayList<TravelDTO>();
+        ArrayList<TravelDTO> list = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "select * from Travel order by (sum / count) desc";
+        String sql = "select * from Travel order by (sum / count) desc ";
 
         try {
 
@@ -63,6 +57,42 @@ public class TravelDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException(e);
+        }finally {
+            DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
+        }
+        return list;
+    }
+
+
+
+    //2. 권역별 검색 결과
+    public ArrayList<TravelDTO> districtList(Connection conn, String district) {
+
+        ArrayList<TravelDTO> list = new ArrayList<>();
+        String sql = "select * from Travel where District = ? order by (sum / count) desc";
+
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, district);
+
+            rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                TravelDTO traveldto = new TravelDTO();
+
+                traveldto.setTravelNo(rs.getInt("TravelNo"));
+                traveldto.setDistrict(rs.getString("District"));
+                traveldto.setTitle(rs.getString("Title"));
+                traveldto.setSum(rs.getFloat("Sum"));
+                traveldto.setCount(rs.getInt("Count"));
+
+                list.add(traveldto);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         } finally {
             DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
         }
@@ -70,66 +100,37 @@ public class TravelDAO {
     }
 
 
-    //2. 권역별 검색 결과
-    public ArrayList<TravelDTO> districtList(Connection conn, String district) {
-
-        ArrayList<TravelDTO> list = new ArrayList<TravelDTO>();
-        String sql = "select * from Travel where District = ? order by (sum / count) desc";
-
-        try {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, district);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                TravelDTO traveldto = new TravelDTO();
-
-                traveldto.setTravelNo(rs.getInt("TravelNo"));
-                traveldto.setDistrict(rs.getString("District"));
-                traveldto.setTitle(rs.getString("Title"));
-                traveldto.setSum(rs.getFloat("Sum"));
-                traveldto.setCount(rs.getInt("Count"));
-
-                list.add(traveldto);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-
     //3. 지역명으로 관광지 검색(지역명 -> title)
-    public ArrayList<TravelDTO> titleList(Connection conn, String title) {
+    // 종원님 구현 예정
 
-        ArrayList<TravelDTO> list = new ArrayList<>();
-        String sql = "select * from Travel where Title like ? order by (sum / count) desc)";
-
-        try {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, title + "%");
-
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                TravelDTO traveldto = new TravelDTO();
-
-                traveldto.setTravelNo(rs.getInt("TravelNo"));
-                traveldto.setDistrict(rs.getString("District"));
-                traveldto.setTitle(rs.getString("Title"));
-                traveldto.setSum(rs.getFloat("Sum"));
-                traveldto.setCount(rs.getInt("Count"));
-
-                list.add(traveldto);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
+//    public ArrayList<TravelDTO> titleList(Connection conn, String district, String title) {
+//
+//        ArrayList<TravelDTO> list = new ArrayList<>();
+//        String sql = "select * from Travel where Title = ? order by (sum / count) desc)";
+//
+//        try {
+//
+//            PreparedStatement pstmt = conn.prepareStatement(sql);
+//            pstmt.setString(1, title);
+//
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                TravelDTO traveldto = new TravelDTO();
+//
+//                traveldto.setTravelNo(rs.getInt("TravelNo"));
+//                traveldto.setDistrict(rs.getString("District"));
+//                traveldto.setTitle(rs.getString("Title"));
+//                traveldto.setSum(rs.getFloat("Sum"));
+//                traveldto.setCount(rs.getInt("Count"));
+//
+//                list.add(traveldto);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        return list;
+//    }
 
 
     //4. 관광지 번호로 세부 조회 (관광지 번호 : travelNo)
@@ -148,53 +149,26 @@ public class TravelDAO {
 
             rs = pstmt.executeQuery();
 
-            if (rs.next()) {
+            if (rs.next()){
                 traveldto = new TravelDTO();
-
-                traveldto.setDistrict(rs.getString("District"));
-                traveldto.setTitle(rs.getString("Title"));
-                traveldto.setAddress(rs.getString("Address"));
-                traveldto.setPhone(rs.getString("Phone"));
-                traveldto.setSum(rs.getFloat("Sum"));
-                traveldto.setCount(rs.getInt("Count"));
-                traveldto.setDistrict(rs.getString("District"));
-
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return traveldto;
-    }
-
-
-    //5. 사용자의 나이를 기준으로 가장 선호하는 여행지 검색
-    public ArrayList<TravelDTO> listByUserAge(Connection conn, UserDTO user) {
-        ArrayList<TravelDTO> list = new ArrayList<>();
-        String sql = "select * from Travel where age between ? and ? order by (sum / count) desc)";
-
-        try {
-
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, user.getAge() / 10);
-            pstmt.setInt(2, user.getAge() / 10 + 9);
-
-            ResultSet rs = pstmt.executeQuery();
-
-            while (rs.next()) {
-                TravelDTO traveldto = new TravelDTO();
 
                 traveldto.setTravelNo(rs.getInt("TravelNo"));
                 traveldto.setDistrict(rs.getString("District"));
                 traveldto.setTitle(rs.getString("Title"));
+                traveldto.setDesc(rs.getString("Desc"));
+                traveldto.setAddress(rs.getString("Address"));
+                traveldto.setPhone(rs.getString("Phone"));
                 traveldto.setSum(rs.getFloat("Sum"));
                 traveldto.setCount(rs.getInt("Count"));
 
-                list.add(traveldto);
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
         }
-        return list;
+        return traveldto;
     }
 
 }

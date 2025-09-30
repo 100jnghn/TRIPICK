@@ -90,8 +90,6 @@ public class UserDAO {
         } finally {
             DBConnectionMgr dbcp = getInstance();
             dbcp.freeConnection(pstmt, rs);
-
-
         }
 
         return user;
@@ -143,7 +141,7 @@ public class UserDAO {
         return result;
     }
 
-    public int updateUserInfo(Connection conn, String nickname, int age) {
+    public int updateInfo(Connection conn, String nickname, int age) {
         int result = 0;
         PreparedStatement pstmt = null;
 
@@ -159,6 +157,29 @@ public class UserDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+
+        return result;
+    }
+
+    public int deleteUser(Connection conn, String id) {
+        int result = 0;
+        PreparedStatement pstmt = null;
+
+        String sql = "delete from users where id = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, id);
+
+            result = pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            DBConnectionMgr dbcp = getInstance();
+            dbcp.freeConnection(pstmt);
         }
 
         return result;
