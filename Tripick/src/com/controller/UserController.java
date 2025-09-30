@@ -101,6 +101,20 @@ public class UserController {
         }
     }
 
+    public void selectOneByNo(int userNo) {
+        try {
+            UserDTO user = userService.selectOneByNo(userNo);
+
+            if (user != null) {
+                // 선택된 유저 없음
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
     public void updateId(String id) {
 
         // ===== 뷰 연결 ===== //
