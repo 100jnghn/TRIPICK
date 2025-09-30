@@ -34,6 +34,9 @@ public class TempUserView {
                         } else {
                             String[] idpw = loginMenu();
                             userController.login(idpw[0], idpw[1]);
+                            //관광지 검색, 리뷰 메뉴로 이동 메소드를 호출
+                            TempReviewView view = new TempReviewView();
+                            view.middleMenu();
                         }
                         break;
 
