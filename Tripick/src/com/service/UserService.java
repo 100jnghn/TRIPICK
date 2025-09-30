@@ -165,6 +165,30 @@ public class UserService {
         return result;
     }
 
+    public int deleteUser(String id) {
+        int result = 0;
+
+        try {
+            conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
+
+            result = userDAO.deleteUser(conn, id);
+
+            if (result > 0) conn.commit();
+            else conn.rollback();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                dbcp.freeConnection(conn);
+            }
+        }
+
+        return result;
+    }
+
     // endregion
 
 }

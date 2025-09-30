@@ -149,6 +149,27 @@ public class UserController {
         }
     }
 
+    public void deleteUser(String id) {
+        if(!isLogin) {
+
+            // 로그인 상태가 아님
+            return;
+        }
+
+        // ===== 뷰 연결 ===== //
+        try {
+            int result = userService.deleteUser(id);
+
+            if (result > 0) {
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
     // endregion
 
 }
