@@ -4,7 +4,6 @@ import com.common.DBConnectionMgr;
 import com.controller.UserController;
 import com.model.dto.UserDTO;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -23,12 +22,12 @@ public class UserDAO {
     // region CTOR
 
     public UserDAO() {
-        try {
-            prop.load(UserDAO.class.getResourceAsStream("/query.properties"));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            prop.load(UserDAO.class.getResourceAsStream("/resources/query.properties"));
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 
     // endregion
@@ -48,10 +47,11 @@ public class UserDAO {
             pstmt.setString(3, user.getNickname());
             pstmt.setInt(4, user.getAge());
 
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+
         } finally {
             DBConnectionMgr dbcp = getInstance();
             dbcp.freeConnection(pstmt);
@@ -65,7 +65,7 @@ public class UserDAO {
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "select * from user where id = ?";
+        String sql = "select * from users where id = ?";
 
         try {
             pstmt = conn.prepareStatement(sql);
@@ -106,7 +106,7 @@ public class UserDAO {
             pstmt.setString(1, id);
             pstmt.setInt(2, UserController.myUserNo);
 
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -129,7 +129,7 @@ public class UserDAO {
             pstmt.setString(1, pw);
             pstmt.setInt(2, UserController.myUserNo);
 
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -153,7 +153,7 @@ public class UserDAO {
             pstmt.setInt(2, age);
             pstmt.setInt(3, UserController.myUserNo);
 
-            pstmt.executeUpdate();
+            result = pstmt.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

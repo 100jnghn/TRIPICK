@@ -86,6 +86,28 @@ public class UserService {
         return result;
     }
 
+    // 아이디 값으로 한 행 읽어오기
+    public UserDTO selectOneById(String id) {
+        UserDTO user = null;
+
+        try {
+            conn = dbcp.getConnection();
+            conn.setAutoCommit(false);
+
+            user = userDAO.selectOneById(conn, id);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            if (conn != null) {
+                dbcp.freeConnection(conn);
+            }
+        }
+
+        return user;
+    }
+
     // ID 변경
     public int updateId(String id) {
 

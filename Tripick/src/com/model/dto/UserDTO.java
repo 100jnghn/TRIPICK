@@ -74,4 +74,21 @@ public class UserDTO {
     }
 
     // endregion
+    // region METHODS
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "userNo=" + userNo +
+                ", id='" + id + '\'' +
+                ", pw='" + pw + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", age=" + age +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
+
+
+    // endregion
 }
