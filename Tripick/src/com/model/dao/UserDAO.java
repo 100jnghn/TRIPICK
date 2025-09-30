@@ -95,6 +95,43 @@ public class UserDAO {
         return user;
     }
 
+    public UserDTO selectOneByNo(Connection conn, int userNo) {
+        UserDTO user = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        String sql = "select * from users where user_no = ?";
+
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, userNo);
+
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                user = new UserDTO();
+
+                user.setUserNo(rs.getInt("user_no"));
+                user.setId(rs.getString("id"));
+                user.setPw(rs.getString("pw"));
+                user.setNickname(rs.getString("nickname"));
+                user.setAge(rs.getInt("age"));
+                user.setCreatedAt(rs.getDate("created_at"));
+                user.setUpdatedAt(rs.getDate("updated_at"));
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+
+        } finally {
+            DBConnectionMgr dbcp = getInstance();
+            dbcp.freeConnection(pstmt, rs);
+        }
+
+        return user;
+    }
+    
+
     public int updateId(Connection conn, String id) {
         int result = 0;
         PreparedStatement pstmt = null;
