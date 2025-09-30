@@ -2,6 +2,7 @@ package com.controller;
 
 import com.model.dto.UserDTO;
 import com.service.UserService;
+import com.view.TempUserView;
 
 public class UserController {
 
@@ -24,21 +25,20 @@ public class UserController {
     public void login(String id, String pw) {
 
         // ===== 뷰 연결 ===== //
+        TempUserView view = new TempUserView();
 
         try {
             UserDTO user = userService.login(id, pw);
 
             // 일치하는 아이디 없음
             if (user == null) {
-
-                System.out.println("아이디 없음");
+                view.displayMessage("존재하지 않는 아이디입니다.");
                 return;
             }
 
             // 비밀번호 다름
             if (!pw.equals(user.getPw())) {
-
-                System.out.println("비번 다름");
+                view.displayMessage("비밀번호가 일치하지 않습니다.");
                 return;
             }
 
@@ -46,8 +46,9 @@ public class UserController {
             isLogin = true;
             myUserNo = user.getUserNo();
             myUserId = user.getId();
+            view.displayMessage("로그인 성공!");
+            view.displayMessage("=======로그인 정보=======");
             selectOneById(id);
-            System.out.println("로그인 성공");
 
         } catch (Exception e) {
 
@@ -59,14 +60,16 @@ public class UserController {
     public void signUp(UserDTO user) {
 
         // ===== 뷰 연결 ===== //
+        TempUserView view = new TempUserView();
 
         try {
             int result = userService.signUp(user);
 
+            // 회원가입 성공
             if (result > 0) {
-                // 회원가입 성공
+                view.displayMessage("회원가입에 성공했습니다.");
+                view.displayMessage("=======회원 정보=======");
                 selectOneById(user.getId());
-                System.out.println("회원가입 성공");
 
             } else {
                 // 회원가입 실패
@@ -99,13 +102,9 @@ public class UserController {
     }
 
     public void updateId(String id) {
-        if (!isLogin) {
-
-            // 로그인 상태가 아님
-            return;
-        }
 
         // ===== 뷰 연결 ===== //
+        TempUserView view = new TempUserView();
 
         try {
             int result = userService.updateId(id);
@@ -114,10 +113,12 @@ public class UserController {
                 // 아이디 변경 성공
                 this.myUserId = id;
 
+                view.displayMessage("아이디가 변경되었습니다.");
+                view.displayMessage("=======회원 정보=======");
                 selectOneById(id);
 
             } else {
-                // 아이디 변경 실패
+                view.displayMessage("사용 불가능한 아이디입니다.");
             }
 
         } catch (Exception e) {
@@ -128,23 +129,21 @@ public class UserController {
     }
 
     public void updatePw(String pw) {
-        if (!isLogin) {
-
-            // 로그인 상태가 아님
-            return;
-        }
 
         // ===== 뷰 연결 ===== //
+        TempUserView view = new TempUserView();
 
         try {
             int result = userService.updatePw(pw);
 
+            // 비번 변경 성공
             if (result > 0) {
-                // 비번 변경 성공
                 selectOneById(this.myUserId);
+                view.displayMessage("비밀번호가 변경되었습니다.");
 
             } else {
                 // 비번 변경 실패
+                view.displayMessage("비밀번호 변경에 실패했습니다.");
             }
 
         } catch (Exception e) {
@@ -155,23 +154,22 @@ public class UserController {
     }
 
     public void updateInfo(String nickname, int age) {
-        if (!isLogin) {
-
-            // 로그인 상태가 아님
-            return;
-        }
 
         // ===== 뷰 연결 ===== //
+        TempUserView view = new TempUserView();
 
         try {
             int result = userService.updateInfo(nickname, age);
 
             if (result > 0) {
                 // 닉네임, 나이 변경 성공
+                view.displayMessage("회원 정보 변경에 성공했습니다.");
+                view.displayMessage("=======회원 정보=======");
                 selectOneById(this.myUserId);
 
             } else {
                 // 변경 실패
+                view.displayMessage("회원 정보 변경에 실패했습니다.");
             }
 
         } catch (Exception e) {
@@ -182,13 +180,7 @@ public class UserController {
     }
 
     public void deleteUser(String id) {
-        if(!isLogin) {
 
-            // 로그인 상태가 아님
-            return;
-        }
-
-        // ===== 뷰 연결 ===== //
         try {
             int result = userService.deleteUser(id);
 
