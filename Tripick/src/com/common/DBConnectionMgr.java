@@ -32,7 +32,7 @@ public class DBConnectionMgr {
     private String _driver = "com.mysql.cj.jdbc.Driver",
     _url = "jdbc:mysql://localhost:3306/tripick",
     _user = "scott",
-    _password = "tiger";
+    _password = "sql1234";
     private boolean _traceOn = false;
     private boolean initialized = false;
     private int _openConnections = 10;

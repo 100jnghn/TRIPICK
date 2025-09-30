@@ -10,6 +10,5 @@ public class UserController {
     * */
     public static boolean isLogin;
     public static int myUserNo;
-
     // endregion
 }

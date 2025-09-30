@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'org.example'
@@ -15,6 +16,10 @@ dependencies {
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'com.opencsv:opencsv:5.5'
     implementation 'com.mysql:mysql-connector-j:8.4.0'
+}
+
+application {
+    mainClass = 'org.app.application'
 }
 
 test {
