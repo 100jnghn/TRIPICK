@@ -1,20 +1,15 @@
 package com.model.dao;
 
 import com.common.DBConnectionMgr;
-import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-
-import static com.common.DBConnectionMgr.getInstance;
 
 public class TravelDAO {
 
@@ -36,11 +31,11 @@ public class TravelDAO {
 
     public ArrayList<TravelDTO> TravelList(Connection conn) {
 
-        ArrayList<TravelDTO> list = new ArrayList<TravelDTO>();
+        ArrayList<TravelDTO> list = new ArrayList<>();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
 
-        String sql = "select * from Travel order by (sum / count) desc";
+        String sql = "select * from Travel order by (sum / count) desc ";
 
         try {
 
@@ -73,15 +68,17 @@ public class TravelDAO {
     //2. 권역별 검색 결과
     public ArrayList<TravelDTO> districtList(Connection conn, String district) {
 
-        ArrayList<TravelDTO> list = new ArrayList<TravelDTO>();
+        ArrayList<TravelDTO> list = new ArrayList<>();
         String sql = "select * from Travel where District = ? order by (sum / count) desc";
 
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
         try {
 
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, district);
 
-            ResultSet rs = pstmt.executeQuery();
+            rs = pstmt.executeQuery();
 
             while (rs.next()) {
                 TravelDTO traveldto = new TravelDTO();
@@ -96,6 +93,8 @@ public class TravelDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
         }
         return list;
     }
@@ -153,17 +152,21 @@ public class TravelDAO {
             if (rs.next()){
                 traveldto = new TravelDTO();
 
+                traveldto.setTravelNo(rs.getInt("TravelNo"));
                 traveldto.setDistrict(rs.getString("District"));
                 traveldto.setTitle(rs.getString("Title"));
+                traveldto.setDesc(rs.getString("Desc"));
                 traveldto.setAddress(rs.getString("Address"));
                 traveldto.setPhone(rs.getString("Phone"));
                 traveldto.setSum(rs.getFloat("Sum"));
                 traveldto.setCount(rs.getInt("Count"));
-                traveldto.setDistrict(rs.getString("District"));
+
 
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }finally {
+            DBConnectionMgr.getInstance().freeConnection(pstmt, rs);
         }
         return traveldto;
     }
