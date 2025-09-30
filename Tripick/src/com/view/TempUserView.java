@@ -28,7 +28,7 @@ public class TempUserView {
 
                     // 종료
                     case -1:
-                        displayMessage("종료합니다~");
+                        displayEnding();
                         return;
 
                     // 로그인
@@ -113,12 +113,11 @@ public class TempUserView {
         }
     }
 
-
     private String[] loginMenu() {
         String[] idpw = new String[2];
 
         System.out.println("\n╔═════════════════════════════════╗");
-        System.out.println("║          🔐 로그인 화면 🔐          ║");
+        System.out.println("║        🔐 로그인 화면 🔐        ║");
         System.out.println("╚═════════════════════════════════╝\n");
 
         System.out.println("─ 계정 정보를 입력해 주세요 ─────────────────");
@@ -138,7 +137,7 @@ public class TempUserView {
         UserDTO user = new UserDTO();
 
         System.out.println("\n╔═════════════════════════════════╗");
-        System.out.println("║         ✨ 회원 가입 화면 ✨         ║");
+        System.out.println("║        ✨ 회원 가입 화면 ✨     ║");
         System.out.println("╚═════════════════════════════════╝\n");
 
         System.out.println("─ 입력 정보를 정확히 기입해주세요 ─────────────────");
@@ -215,13 +214,28 @@ public class TempUserView {
     }
 
     public void alreadyLogin() {
-        System.out.println("이미 로그인 상태입니다.");
+        System.out.println("\n╔═════════════════════════════════╗");
+        System.out.println("║       ✅ 현재 상태 알림 ✅      ║");
+        System.out.println("╠═════════════════════════════════╣");
+        System.out.println("║      이미 로그인 상태입니다.     ║");
+        System.out.println("║ 계속해서 서비스를 이용해 주세요. ║");
+        System.out.println("╚═════════════════════════════════╝\n");
         userController.selectOneById(UserController.myUserId);
     }
 
     public void displayMessage(String message) {
         System.out.println(message);
     }
+
+    private void displayEnding() {
+        System.out.println("\n╔═════════════════════════════════╗");
+        System.out.println("║       👋 프로그램 종료 👋      ║");
+        System.out.println("╠═════════════════════════════════╣");
+        System.out.println("║   저희 프로그램을 이용해 주셔서  ║");
+        System.out.println("║   진심으로 감사합니다. (FIN)     ║");
+        System.out.println("╚═════════════════════════════════╝\n");
+    }
+
 
     // endregion
     // region METHODS-INPUT
