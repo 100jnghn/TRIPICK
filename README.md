@@ -7,10 +7,10 @@
 
 <br><br>
 
-## Team
+## 👤 Team
 👦🏻 **백종훈** (팀장)  
-- 로그인 / 회원가입 / 인증관리
-- 유저 정보 등록, 삭제, 수정
+  - 로그인 / 회원가입 / 인증관리  
+  - 유저 정보 등록, 삭제, 수정
 <br><br>
 
 👱🏻 **정종원**  
@@ -28,8 +28,20 @@
 - 권역별 관광지 조회
 - 지역별 관광지 조회
 
+<br><br>
 
-기술 스택
+## ⚙️ 기술 스택
+
+- **Language**: Java 17+
+- **Database**: MySQL (JDBC 연동)
+- **IDE**: IntelliJ IDEA
+- **Structure**: MVC 패턴  
+  - View: 
+  - Controller: 
+  - Service: 
+  - DAO: 
+  - DTO: 
+ 
 
 프로젝트 구조
 
