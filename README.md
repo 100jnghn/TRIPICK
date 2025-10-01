@@ -31,9 +31,9 @@
 <br><br>
 
 ## ⚙️ 기술 스택
-- **Language**: Java 17+
-- **Database**: MySQL (JDBC 연동)
-- **IDE**: IntelliJ IDEA
+- **Language** : ![](https://img.shields.io/badge/Java-007396?style=plastic&logo=OpenJDK&logoColor=white) 
+- **Database** : ![](https://img.shields.io/badge/MySQL-4479A1?style=plastic&logo=MySQL&logoColor=white) (JDBC 연동)
+- **IDE** : ![](https://img.shields.io/badge/IntelliJ-000000?style=plastic&logo=intellijidea&logoColor=white) 
 - **Structure**: MVC Pattern  
   - View: 사용자가 보는 화면. Controller에게 요청을 전달하고 응답을 받아 표시
   - Controller: 사용자 요청을 받아 Service 호출을 통해 처리된 결과를 View에 전달
