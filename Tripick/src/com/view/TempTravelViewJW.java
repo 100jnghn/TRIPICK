@@ -12,7 +12,7 @@ public class TempTravelViewJW {
     private TravelControllerJW tController = null;
 
     public TempTravelViewJW() {
-        System.out.println("생성");
+        System.out.println();
     }
 
     public void inputTravelMenu() {

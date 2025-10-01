@@ -5,17 +5,12 @@ import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
 import com.model.dto.UserDTO;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Properties;
-
-import static com.common.DBConnectionMgr.getInstance;
 
 public class TravelDAO {
 
@@ -147,6 +142,7 @@ public class TravelDAO {
                 traveldto.setPhone(rs.getString("Phone"));
                 traveldto.setSum(rs.getFloat("Sum"));
                 traveldto.setCount(rs.getInt("Count"));
+                traveldto.setDesc(rs.getString("description"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -196,26 +192,21 @@ public class TravelDAO {
     public ArrayList<ReviewDTO> getReviewList(Connection conn, TravelDTO place) {
         ArrayList<ReviewDTO> list = new ArrayList<>();
         String sql = "select * from Review where travel_no = ? order by created_at desc limit 3";
-        ReviewDTO reviewdto = new ReviewDTO();
-
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, place.getTravelNo());
             ResultSet rs = pstmt.executeQuery();
 
-            do {
+            while (rs.next()) {
+                ReviewDTO reviewdto = new ReviewDTO();
                 reviewdto.setReviewNo(rs.getInt("review_no"));
                 reviewdto.setUserNo(rs.getInt("user_no"));
                 reviewdto.setReviewTitle(rs.getString("title"));
                 reviewdto.setContent(rs.getString("content"));
                 reviewdto.setCreatedAt(rs.getString("created_at"));
-                System.out.println(reviewdto+" rs.next\n====");
                 list.add(reviewdto);
-            } while(rs.next());
-
-            for(ReviewDTO reviewDTO : list) {
-                System.out.println(reviewDTO+" in list\n====");
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

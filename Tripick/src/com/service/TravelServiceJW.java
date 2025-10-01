@@ -119,8 +119,6 @@ public class TravelServiceJW {
         try {
             conn = pool.getConnection();
             list = travelDAO.getReviewList(conn, travelDTO);
-            for(ReviewDTO reviewDTO : list)
-                System.out.println(reviewDTO);
         }catch (Exception e) {
             e.printStackTrace();
         }finally {

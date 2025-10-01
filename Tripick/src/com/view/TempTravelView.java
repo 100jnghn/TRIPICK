@@ -99,9 +99,7 @@ public class TempTravelView {
             System.out.println("---------------------------------");
             System.out.println(travelDTO.getDesc());
             System.out.println("---------------------------------");
-    }
-
-
+        }
     }
 
 

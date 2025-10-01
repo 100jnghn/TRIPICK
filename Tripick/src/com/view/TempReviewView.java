@@ -85,6 +85,7 @@ public class TempReviewView {
                 case 3:
                     int reviewNo = printDetailReview();
                     con.readDetailReview(reviewNo);
+                    break;
                 case -1:
                     System.out.println("종료");
                     return;

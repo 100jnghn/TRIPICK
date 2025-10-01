@@ -1,12 +1,8 @@
 package com.controller;
 
-import com.model.dao.UserDAO;
 import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
-import com.model.dto.UserDTO;
-import com.service.TravelService;
 import com.service.TravelServiceJW;
-import com.view.TempTravelView;
 import com.view.TempTravelViewJW;
 
 import java.util.ArrayList;
@@ -92,5 +88,6 @@ public class TravelControllerJW {
             return;
         }
         view.displayTravelList(list);
+
     }
 }
