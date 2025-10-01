@@ -5,7 +5,7 @@ import com.model.dto.TravelDTO;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TempTravelView {
+public class TravelView {
     private Scanner sc = new Scanner(System.in);
     private TravelDTO travelDTO;
 

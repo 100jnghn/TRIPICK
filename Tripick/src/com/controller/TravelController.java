@@ -2,7 +2,7 @@ package com.controller;
 
 import com.model.dto.TravelDTO;
 import com.service.TravelService;
-import com.view.TempTravelView;
+import com.view.TravelView;
 
 
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class TravelController {
 
     private Scanner sc = new Scanner(System.in);
     private TravelService travelService = new TravelService();
-    private TempTravelView view = new TempTravelView();
+    private TravelView view = new TravelView();
 
 
     //1. 전체 관광지 리스트

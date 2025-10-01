@@ -1,7 +1,7 @@
 package com.model.dao;
 
+import com.Auth.LoginAccount;
 import com.common.DBConnectionMgr;
-import com.controller.UserController;
 import com.model.dto.UserDTO;
 
 import java.sql.Connection;
@@ -141,7 +141,7 @@ public class UserDAO {
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, id);
-            pstmt.setInt(2, UserController.myUserNo);
+            pstmt.setInt(2, LoginAccount.getInstance().getUserNo());
 
             result = pstmt.executeUpdate();
 
@@ -164,7 +164,7 @@ public class UserDAO {
         try {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, pw);
-            pstmt.setInt(2, UserController.myUserNo);
+            pstmt.setInt(2, LoginAccount.getInstance().getUserNo());
 
             result = pstmt.executeUpdate();
 
@@ -188,7 +188,7 @@ public class UserDAO {
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, nickname);
             pstmt.setInt(2, age);
-            pstmt.setInt(3, UserController.myUserNo);
+            pstmt.setInt(3, LoginAccount.getInstance().getUserNo());
 
             result = pstmt.executeUpdate();
 

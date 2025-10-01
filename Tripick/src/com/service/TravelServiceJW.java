@@ -1,5 +1,6 @@
 package com.service;
 
+import com.Auth.LoginAccount;
 import com.common.DBConnectionMgr;
 import com.model.dao.TravelDAO;
 import com.model.dao.UserDAO;
@@ -9,8 +10,6 @@ import com.model.dto.UserDTO;
 
 import java.sql.Connection;
 import java.util.ArrayList;
-
-import static com.controller.UserController.myUserNo;
 
 public class TravelServiceJW {
 
@@ -135,7 +134,7 @@ public class TravelServiceJW {
         UserDAO dao = new UserDAO();
         try {
             conn = pool.getConnection();
-            UserDTO user = dao.selectOneByNo(conn, myUserNo);
+            UserDTO user = dao.selectOneByNo(conn, LoginAccount.getInstance().getUserNo());
             list = travelDAO.listByUserAge(conn, user);
 
             if (list == null) {

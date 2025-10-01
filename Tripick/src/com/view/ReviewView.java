@@ -1,14 +1,14 @@
 package com.view;
 
+import com.Auth.LoginAccount;
 import com.controller.ReviewController;
-import com.controller.UserController;
 import com.model.dto.ReviewDTO;
 
 import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class TempReviewView {
+public class ReviewView {
     public Scanner sc = new Scanner(System.in);
 
     public void middleMenu() {
@@ -21,7 +21,7 @@ public class TempReviewView {
             switch (choice) {
                 case 1:
                     //관관지 메뉴 메소드 호출
-                    TempTravelViewJW tempTravelView = new TempTravelViewJW();
+                    TravelViewJW tempTravelView = new TravelViewJW();
                     tempTravelView.inputTravelMenu();
                     break;
                 case 2://리뷰 메뉴로 이동
@@ -163,7 +163,7 @@ public class TempReviewView {
 
     private ReviewDTO insertMenu() {
         ReviewDTO dto = new ReviewDTO();
-        dto.setUserNo(UserController.myUserNo);
+        dto.setUserNo(LoginAccount.getInstance().getUserNo());
         System.out.println("=================================");
         System.out.println("===========리뷰 등록 화면===========");
         System.out.print("관광지 번호 입력 >> ");

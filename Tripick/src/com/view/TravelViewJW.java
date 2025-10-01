@@ -7,11 +7,11 @@ import com.model.dto.TravelDTO;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class TempTravelViewJW {
+public class TravelViewJW {
     private Scanner sc = new Scanner(System.in);
     private TravelControllerJW tController = null;
 
-    public TempTravelViewJW() {
+    public TravelViewJW() {
         System.out.println();
     }
 
