@@ -2,7 +2,7 @@ package com.controller;
 
 import com.model.dto.UserDTO;
 import com.service.UserService;
-import com.view.TempUserView;
+import com.view.StartView;
 
 public class UserController {
 
@@ -25,7 +25,7 @@ public class UserController {
     public void login(String id, String pw) {
 
         // ===== 뷰 연결 ===== //
-        TempUserView view = new TempUserView();
+        StartView view = new StartView();
 
         try {
             UserDTO user = userService.login(id, pw);
@@ -60,7 +60,7 @@ public class UserController {
     public void signUp(UserDTO user) {
 
         // ===== 뷰 연결 ===== //
-        TempUserView view = new TempUserView();
+        StartView view = new StartView();
 
         try {
             int result = userService.signUp(user);
@@ -118,7 +118,7 @@ public class UserController {
     public void updateId(String id) {
 
         // ===== 뷰 연결 ===== //
-        TempUserView view = new TempUserView();
+        StartView view = new StartView();
 
         try {
             int result = userService.updateId(id);
@@ -145,7 +145,7 @@ public class UserController {
     public void updatePw(String pw) {
 
         // ===== 뷰 연결 ===== //
-        TempUserView view = new TempUserView();
+        StartView view = new StartView();
 
         try {
             int result = userService.updatePw(pw);
@@ -170,7 +170,7 @@ public class UserController {
     public void updateInfo(String nickname, int age) {
 
         // ===== 뷰 연결 ===== //
-        TempUserView view = new TempUserView();
+        StartView view = new StartView();
 
         try {
             int result = userService.updateInfo(nickname, age);

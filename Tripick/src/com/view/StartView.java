@@ -1,15 +1,18 @@
 package com.view;
 
+import com.Auth.LoginAccount;
 import com.controller.UserController;
 import com.model.dto.UserDTO;
 
 import java.util.Scanner;
 
 // 로그인 - 회원가입 - 유저 정보 수정 진행 뷰
-public class TempUserView {
+public class StartView {
 
     private static Scanner sc = new Scanner(System.in);
     private UserController userController = new UserController();
+
+    private LoginAccount loginAccount = new LoginAccount();
 
     public void startMenu() {
 
@@ -39,7 +42,6 @@ public class TempUserView {
                         } else {
                             String[] idpw = loginMenu();
                             userController.login(idpw[0], idpw[1]);
-
                         }
                         break;
 
@@ -51,7 +53,6 @@ public class TempUserView {
                         } else {
                             UserDTO user = createUserMenu();
                             userController.signUp(user);
-
                         }
                         break;
 
