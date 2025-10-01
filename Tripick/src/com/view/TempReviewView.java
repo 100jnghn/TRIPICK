@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class TempReviewView {
     public Scanner sc = new Scanner(System.in);
 
-
     public void middleMenu() {
         while (true) {
             displayMiddleMenu();
@@ -22,6 +21,8 @@ public class TempReviewView {
             switch (choice) {
                 case 1:
                     //관관지 메뉴 메소드 호출
+                    TempTravelViewJW tempTravelView = new TempTravelViewJW();
+                    tempTravelView.inputTravelMenu();
                     break;
                 case 2://리뷰 메뉴로 이동
                     reviewMenu();
