@@ -154,20 +154,24 @@ public class TravelDAO {
     //5. 사용자의 나이를 기준으로 가장 선호하는 여행지 검색
     public ArrayList<TravelDTO> listByUserAge(Connection conn, UserDTO user) {
         ArrayList<TravelDTO> list = new ArrayList<>();
-        String sql = "SELECT * \n" +
-                "FROM (SELECT a.travel_no\n" +
-                "FROM review a\n" +
-                "left JOIN USERS b ON b.user_no = a.user_no\n" +
-                "WHERE b.age BETWEEN ? AND ?\n" +
-                "GROUP BY a.travel_no\n" +
-                "ORDER BY sum(a.rate) / count(*) DESC LIMIT 3) AS sub\n" +
-                "LEFT JOIN travel t USING(travel_no);";
+        String sql = """
+                                SELECT t.*, j.rate_sum, j.review_count
+                FROM travel t
+                         JOIN (SELECT a.travel_no,
+                                      SUM(a.rate) AS rate_sum,
+                                      COUNT(*)    AS review_count
+                               FROM review a
+                                        JOIN users b using(user_no)
+                               WHERE b.age BETWEEN ? AND ?
+                               GROUP BY a.travel_no) j using(travel_no)
+                ORDER BY j.rate_sum/j.review_count DESC;
+                """;
 
         try {
 
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, (user.getAge() / 10)*10);
-            pstmt.setInt(2, (user.getAge() / 10)*10 + 9);
+            pstmt.setInt(1, (user.getAge() / 10) * 10);
+            pstmt.setInt(2, (user.getAge() / 10) * 10 + 9);
 
             ResultSet rs = pstmt.executeQuery();
 
@@ -177,8 +181,8 @@ public class TravelDAO {
                 traveldto.setTravelNo(rs.getInt("travel_no"));
                 traveldto.setDistrict(rs.getString("District"));
                 traveldto.setTitle(rs.getString("Title"));
-                traveldto.setSum(rs.getFloat("Sum"));
-                traveldto.setCount(rs.getInt("Count"));
+                traveldto.setSum(rs.getFloat("rate_sum"));
+                traveldto.setCount(rs.getInt("review_count"));
 
                 list.add(traveldto);
             }
