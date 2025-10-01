@@ -45,6 +45,51 @@
 
 ## 🗂️프로젝트 구조
 
+```
+[Tripick]
+    \---src
+        \---com
+            +---Auth
+            |       LoginAccount.java
+            |
+            +---common
+            |       DBConnectionMgr.java
+            |
+            +---controller
+            |       ReviewController.java
+            |       TravelController.java
+            |       TravelControllerJW.java
+            |       UserController.java
+            |
+            +---model
+            |   +---dao
+            |   |       ReviewDAO.java
+            |   |       TravelDAO.java
+            |   |       UserDAO.java
+            |   |
+            |   \---dto
+            |           ReviewDTO.java
+            |           TravelDTO.java
+            |           UserDTO.java
+            |
+            +---run
+            |       Run.java
+            |
+            +---service
+            |       ReviewService.java
+            |       TravelService.java
+            |       TravelServiceJW.java
+            |       UserService.java
+            |
+            \---view
+                    ReviewView.java
+                    StartView.java
+                    TravelView.java
+                    TravelViewJW.java
+```
+
+<br><br>
+                
 ## 💾 테이블 설계
 
 `USERS`
