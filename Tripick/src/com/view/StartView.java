@@ -12,7 +12,7 @@ public class StartView {
     private static Scanner sc = new Scanner(System.in);
     private UserController userController = new UserController();
 
-    private LoginAccount loginAccount = new LoginAccount();
+    //private LoginAccount loginAccount = LoginAccount.getInstance();
 
     public void startMenu() {
 
@@ -36,7 +36,7 @@ public class StartView {
 
                     // 로그인
                     case 1:
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             alreadyLogin();
 
                         } else {
@@ -47,7 +47,7 @@ public class StartView {
 
                     // 회원가입
                     case 2:
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             alreadyLogin();
 
                         } else {
@@ -58,7 +58,7 @@ public class StartView {
 
                     // 회원 정보 수정
                     case 3:
-                        if (!UserController.isLogin) {
+                        if (!LoginAccount.getInstance().isLogin()) {
                             displayMessage("로그인 상태가 아닙니다.");
 
                         } else {
@@ -87,7 +87,7 @@ public class StartView {
 
                     case 4:
                         //관광지 검색, 리뷰 메뉴로 이동 메소드를 호출
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             TempReviewView view = new TempReviewView();
                             view.middleMenu();
 
@@ -101,6 +101,7 @@ public class StartView {
                     case 5:
                         String id = deleteUserMenu();
                         userController.deleteUser(id);
+                        break;
 
                     default:
                         displayMessage("잘못된 입력값입니다.");

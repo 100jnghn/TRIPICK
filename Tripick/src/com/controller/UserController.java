@@ -1,5 +1,6 @@
 package com.controller;
 
+import com.Auth.LoginAccount;
 import com.model.dto.UserDTO;
 import com.service.UserService;
 import com.view.StartView;
@@ -46,6 +47,12 @@ public class UserController {
             isLogin = true;
             myUserNo = user.getUserNo();
             myUserId = user.getId();
+
+            // 싱글톤 로그인 인스턴스 값 수정
+            LoginAccount.getInstance().setLogin(true);
+            LoginAccount.getInstance().setUserId(user.getId());
+            LoginAccount.getInstance().setUserNo(user.getUserNo());
+
             view.displayMessage("로그인 성공!");
             view.displayMessage("=======로그인 정보=======");
             selectOneById(id);
@@ -127,6 +134,9 @@ public class UserController {
                 // 아이디 변경 성공
                 this.myUserId = id;
 
+                // 싱글톤 인스턴스 값 수정
+                LoginAccount.getInstance().setUserId(id);
+
                 view.displayMessage("아이디가 변경되었습니다.");
                 view.displayMessage("=======회원 정보=======");
                 selectOneById(id);
@@ -152,7 +162,7 @@ public class UserController {
 
             // 비번 변경 성공
             if (result > 0) {
-                selectOneById(this.myUserId);
+                selectOneById(LoginAccount.getInstance().getUserId());
                 view.displayMessage("비밀번호가 변경되었습니다.");
 
             } else {
@@ -179,7 +189,7 @@ public class UserController {
                 // 닉네임, 나이 변경 성공
                 view.displayMessage("회원 정보 변경에 성공했습니다.");
                 view.displayMessage("=======회원 정보=======");
-                selectOneById(this.myUserId);
+                selectOneById(LoginAccount.getInstance().getUserId());
 
             } else {
                 // 변경 실패
