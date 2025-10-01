@@ -1,15 +1,18 @@
 package com.view;
 
+import com.Auth.LoginAccount;
 import com.controller.UserController;
 import com.model.dto.UserDTO;
 
 import java.util.Scanner;
 
 // 로그인 - 회원가입 - 유저 정보 수정 진행 뷰
-public class TempUserView {
+public class StartView {
 
     private static Scanner sc = new Scanner(System.in);
     private UserController userController = new UserController();
+
+    //private LoginAccount loginAccount = LoginAccount.getInstance();
 
     public void startMenu() {
 
@@ -33,31 +36,29 @@ public class TempUserView {
 
                     // 로그인
                     case 1:
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             alreadyLogin();
 
                         } else {
                             String[] idpw = loginMenu();
                             userController.login(idpw[0], idpw[1]);
-
                         }
                         break;
 
                     // 회원가입
                     case 2:
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             alreadyLogin();
 
                         } else {
                             UserDTO user = createUserMenu();
                             userController.signUp(user);
-
                         }
                         break;
 
                     // 회원 정보 수정
                     case 3:
-                        if (!UserController.isLogin) {
+                        if (!LoginAccount.getInstance().isLogin()) {
                             displayMessage("로그인 상태가 아닙니다.");
 
                         } else {
@@ -86,7 +87,7 @@ public class TempUserView {
 
                     case 4:
                         //관광지 검색, 리뷰 메뉴로 이동 메소드를 호출
-                        if (UserController.isLogin) {
+                        if (LoginAccount.getInstance().isLogin()) {
                             TempReviewView view = new TempReviewView();
                             view.middleMenu();
 
@@ -100,6 +101,7 @@ public class TempUserView {
                     case 5:
                         String id = deleteUserMenu();
                         userController.deleteUser(id);
+                        break;
 
                     default:
                         displayMessage("잘못된 입력값입니다.");
