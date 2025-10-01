@@ -87,7 +87,7 @@ public class TravelControllerJW {
             view.displayNoData();
             return;
         }
-        view.displayTravelList(list);
+        view.displayAgeList(list);
 
     }
 }

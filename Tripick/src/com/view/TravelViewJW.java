@@ -51,9 +51,6 @@ public class TravelViewJW {
 
     public void displayAllTravelList() {
         System.out.println("\n========== 전체 조회 결과 ==========");
-        System.out.println("No \t District \t Title \t Rate");
-        System.out.println("---------------------------------");
-
     }
 
 
@@ -108,20 +105,18 @@ public class TravelViewJW {
     //권역별 검색 결과 출력
     public void displayDistrictResult(ArrayList<TravelDTO> list, String district) {
         System.out.println("\n========== < " + district + " > ==========");
-        System.out.println("No \t District \t Title \t Rate");
-        System.out.println("---------------------------------");
         displayTravelList(list);
     }
 
     //권역 입력 받기
     public String inputDistrict() {
-        System.out.println("검색하실 권역을 입력하세요");
+        System.out.print("검색하실 권역을 입력하세요. ");
         return sc.nextLine();
     }
 
     //지역 입력 받기
     public String inputCity() {
-        System.out.println("검색하실 권역을 입력하세요");
+        System.out.print("검색하실 지역을 입력하세요. ");
         return sc.nextLine();
     }
 
@@ -154,16 +149,12 @@ public class TravelViewJW {
     //지역 검색 결과 출력
     public void displayCityResult(ArrayList<TravelDTO> list, String City) {
         System.out.println("\n========== < " + City + " > ==========");
-        System.out.println("No \t District \t Title \t Rate");
-        System.out.println("---------------------------------");
         displayTravelList(list);
     }
 
     //나이 구별 검색 결과 출력
     public void displayAgeList(ArrayList<TravelDTO> list) {
         System.out.println("회원님과 비슷한 나이의 유저들이 선호하는 관광지입니다.");
-        System.out.println("No \t District \t Title \t Rate");
-        System.out.println("---------------------------------");
         displayTravelList(list);
     }
 
