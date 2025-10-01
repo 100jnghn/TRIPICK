@@ -3,14 +3,14 @@ package com.controller;
 import com.model.dto.ReviewDTO;
 import com.model.dto.TravelDTO;
 import com.service.TravelServiceJW;
-import com.view.TempTravelViewJW;
+import com.view.TravelViewJW;
 
 import java.util.ArrayList;
 
 public class TravelControllerJW {
 
     private TravelServiceJW travelService = new TravelServiceJW();
-    private TempTravelViewJW view = new TempTravelViewJW();
+    private TravelViewJW view = new TravelViewJW();
 
     //1. 전체 관광지 리스트
     public void showTravelList() {

@@ -7,17 +7,10 @@ import com.view.StartView;
 
 public class UserController {
 
+
+    // region Service
+
     UserService userService = new UserService();
-
-    // region FIELDS
-
-    /*
-     * isLogin : 처음 로그인할 때 false -> true로 변경
-     * myUserNo : 로그인 성공하면 입력한 유저의 user_no 저장
-     * */
-    public static boolean isLogin;
-    public static int myUserNo;
-    public static String myUserId;
 
     // endregion
     // region METHODS
@@ -44,10 +37,6 @@ public class UserController {
             }
 
             // 로그인 성공
-            isLogin = true;
-            myUserNo = user.getUserNo();
-            myUserId = user.getId();
-
             // 싱글톤 로그인 인스턴스 값 수정
             LoginAccount.getInstance().setLogin(true);
             LoginAccount.getInstance().setUserId(user.getId());
@@ -132,8 +121,6 @@ public class UserController {
 
             if (result > 0) {
                 // 아이디 변경 성공
-                this.myUserId = id;
-
                 // 싱글톤 인스턴스 값 수정
                 LoginAccount.getInstance().setUserId(id);
 

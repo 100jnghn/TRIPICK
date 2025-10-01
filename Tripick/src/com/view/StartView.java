@@ -88,7 +88,7 @@ public class StartView {
                     case 4:
                         //관광지 검색, 리뷰 메뉴로 이동 메소드를 호출
                         if (LoginAccount.getInstance().isLogin()) {
-                            TempReviewView view = new TempReviewView();
+                            ReviewView view = new ReviewView();
                             view.middleMenu();
 
                         } else {
@@ -222,7 +222,7 @@ public class StartView {
         System.out.println("║      이미 로그인 상태입니다.     ║");
         System.out.println("║ 계속해서 서비스를 이용해 주세요. ║");
         System.out.println("╚═════════════════════════════════╝\n");
-        userController.selectOneById(UserController.myUserId);
+        userController.selectOneById(LoginAccount.getInstance().getUserId());
     }
 
     public void displayMessage(String message) {
