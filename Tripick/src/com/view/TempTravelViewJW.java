@@ -56,37 +56,45 @@ public class TempTravelViewJW {
 
     }
 
+
     public void displayTravelList(ArrayList<TravelDTO> list) {
         tController = new TravelControllerJW();
-        int showIndex = 0;
+        int startIndex = 0;
+        int lastIndex;
         String choice;
         TravelDTO place = null;
-        do {
-            for (int i = 0; i < 9; i++) {
-                if (list.size() == showIndex + i) break;
-                place = list.get(showIndex + i);
-                System.out.println((i + 1) + " \t " + place.getDistrict()
-                        + " \t " + place.getTitle() + " \t " + Rate(place));
+        while (true) {
+            if (startIndex + 9 <= list.size()) {
+                lastIndex = startIndex + 9;
+            } else {
+                lastIndex = list.size();
             }
+            System.out.println("=================================================================");
+            int j = 1;
+            for(int i = startIndex; i < lastIndex; i++) {
+                place = list.get(i);
+                System.out.println("선택No : " +(j++) + " \t 장소No : " + place.getTravelNo() + " \t " + place.getDistrict() + " \t " + place.getTitle() + " \t 평점 : " + Rate(place));
+            }
+            System.out.println("=================================================================");
             System.out.println("-1. 뒤로 가기");
             System.out.println("n. 다음 목록");
-            System.out.print("세부 조회를 원하시면 해당 번호 입력: ");
+            System.out.print("세부 조회를 원하시면 해당 선택No 입력: ");
             choice = sc.nextLine();
             switch (choice) {
                 case "1", "2", "3", "4", "5",
                      "6", "7", "8", "9" -> {
-                    if (showIndex + Integer.parseInt(choice) >= list.size() + 1)
+                    if (startIndex + Integer.parseInt(choice) >= lastIndex + 1)
                         displayInvalidInput();
                     else {
-                        tController.showTravelDetail(list.get(showIndex + Integer.parseInt(choice) - 1).getTravelNo());
+                        tController.showTravelDetail(list.get(startIndex + Integer.parseInt(choice) - 1).getTravelNo());
                     }
                 }
                 case "-1" -> {
                     return;
                 }
                 case "n" -> {
-                    showIndex += 9;
-                    if (showIndex >= list.size())
+                    startIndex += 9;
+                    if (startIndex >= list.size())
                         System.out.println("마지막 리스트입니다.");
                 }
                 default -> {
@@ -94,7 +102,7 @@ public class TempTravelViewJW {
                     return;
                 }
             }
-        } while (showIndex < list.size());
+        }
     }
 
     //권역별 검색 결과 출력
