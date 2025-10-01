@@ -7,7 +7,7 @@
 
 <br><br>
 
-## 👥 Team
+## 👥 Team & Features
 👦🏻 **백종훈** (팀장)  
   - 로그인 / 회원가입 / 인증관리  
   - 유저 정보 등록, 삭제, 수정
@@ -47,7 +47,46 @@
 
 ## 💾 테이블 설계
 
+`USERS`
+|  ATTRIBUTE  |  TYPE   |  NULL  |  DEFAULT VALUE    |  CONSTRAINT  |
+| ----------- | ------- | ------ | ----------------- | ------------ |
+| user_no     | int     | N      | auto_increment    | PK           |
+| id          | varchar | N      |                   | UK           |
+| pw          | varchar | N      |                   |              |
+| nickname    | varchar | N      |                   | UK           |
+| age         | int     | N      |                   |              |
+| created_at  | date    | N      | current_timestamp |              |
+| updated_at  | date    | Y      |                   |              |
 
+<br>
 
-시연 영상
+`REVIEW`
+|  ATTRIBUTE  |  TYPE   |  NULL  |  DEFAULT VALUE    |  CONSTRAINT  |
+| ----------- | ------- | ------ | ----------------- | ------------ |
+| review_no   | int     | N      | auto_increment    | PK           |
+| user_no     | int     | N      |                   | FK           |
+| travel_no   | int     | N      |                   | FK           |
+| title       | varchar | N      |                   |              |
+| content     | text    | N      |                   |              |
+| rate        | float   | N      |                   |              |
+| created_at  | date    | N      | current_timestamp |              |
+| updated_at  | date    | Y      |                   |              |
+
+<br>
+
+`TRAVEL`
+|  ATTRIBUTE  |  TYPE   |  NULL  |  DEFAULT VALUE    |  CONSTRAINT  |
+| ----------- | ------- | ------ | ----------------- | ------------ |
+| travel_no   | int     | N      | auto_increment    | PK           |
+| district    | varchar | N      |                   | FK           |
+| title       | varchar | N      |                   |              |
+| description | text    | N      |                   |              |
+| address     | varchar | Y      |                   |              |
+| phone       | varchar | N      |                   |              |
+| sum         | float   | Y      | 0                 |              |
+| count       | int     | Y      | 0                 |              |
+
+<br><br>
+
+## 📹시연 영상
 
