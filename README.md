@@ -7,7 +7,7 @@
 
 <br><br>
 
-## 👤 Team
+## 👥 Team
 👦🏻 **백종훈** (팀장)  
   - 로그인 / 회원가입 / 인증관리  
   - 유저 정보 등록, 삭제, 수정
@@ -31,21 +31,23 @@
 <br><br>
 
 ## ⚙️ 기술 스택
-
 - **Language**: Java 17+
 - **Database**: MySQL (JDBC 연동)
 - **IDE**: IntelliJ IDEA
-- **Structure**: MVC 패턴  
-  - View: 
-  - Controller: 
-  - Service: 
-  - DAO: 
-  - DTO: 
- 
+- **Structure**: MVC Pattern  
+  - View: 사용자가 보는 화면. Controller에게 요청을 전달하고 응답을 받아 표시
+  - Controller: 사용자 요청을 받아 Service 호출을 통해 처리된 결과를 View에 전달
+  - Service: 데이터 가공, DAO호출을 수행. 트랜잭션을 관리
+  - DAO: Database에 직접 접근해 query를 실행하고 결과를 반환
+  - DTO: 계층 간 데이터 교환을 위한 Data Container
 
-프로젝트 구조
+ <br><br>
 
-테이블 설계
+## 🗂️프로젝트 구조
+
+## 💾 테이블 설계
+
+
 
 시연 영상
 
